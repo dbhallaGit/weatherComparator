@@ -25,22 +25,25 @@ public class WebUIHelpers {
 		}
 	}
 
-	public void clickElement(WebElement ele) {
+	public void clickElement(WebElement ele) throws Exception {
 		try {
 			
 			wait.until(ExpectedConditions.elementToBeClickable(ele)).click();
 
 		} catch (Exception e) {
-			System.out.println("Element not found");
+			throw new Exception("Element not found" + e.getStackTrace());
 		}
 
 	}
 
-	public void clickElementJS(WebElement ele) {
+	public void clickElementJS(WebElement ele) throws Exception {
 		if(wait.until(ExpectedConditions.elementToBeClickable(ele)) != null) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0]. click();", ele);
 		}
+		else
+			throw new Exception("Element not found" );
+			
 	}
 
 	public String getTitle() {

@@ -39,7 +39,7 @@ public class Setup {
 		
 	}
 	
-	//@After
+	@After
 	public void quit() {
 		WebUIHelpers.driver.quit();
 	}

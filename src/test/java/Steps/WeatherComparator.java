@@ -28,15 +28,15 @@ public class WeatherComparator {
 	}
 
 	@Given("Navigate to weather page")
-	public void navigate_to_weather_page() throws InterruptedException {
+	public void navigate_to_weather_page() throws Exception {
 		homepage.goToWeatherPage();
 
 	}
 
 	@Then("use pin location to select a city {string}")
-	public void use_pin_location_to_select_a_city(String string) throws Exception {
+	public void use_pin_location_to_select_a_city(String cityName) throws Exception {
 		weatherpage.clearDefaultCheckedCities();
-		weatherpage.SearchAndSelectCity(string);
+		weatherpage.SearchAndSelectCity(cityName);
 		
 
 	}
@@ -49,16 +49,18 @@ public class WeatherComparator {
 	}
 
 	@Then("verify weather details reveals on selecting the city")
-	public void verify_weather_details_reveals_on_selecting_the_city() {
+	public void verify_weather_details_reveals_on_selecting_the_city() throws Exception {
 		weatherpage.selectCityOnMap();
 		weatherpage.verfiyWeatherDetailsRevealed();
-		weatherpage.getWeatherDetails();
+		weatherpage.getWeatherDetails();		
+		weatherpage.verfiryWeatherDisplayedOnUI();
+		
 
 	}
 
 	@Then("compare the Weather information from website and API response is similar as per given variance")
 	public void compare_the_weather_information_from_website_and_api_response_is_similar_as_per_given_variance() {
-		// Write code here that turns the phrase above into concrete actions
+		
 
 	}
 

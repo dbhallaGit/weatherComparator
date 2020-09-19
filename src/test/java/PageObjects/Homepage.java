@@ -35,7 +35,7 @@ public class Homepage extends WebUIHelpers {
 	@FindBy(how = How.ID,using = "h_sub_menu")
 	private WebElement SubMenu;
 
-	public void clearNewsAlertSubscription() throws InterruptedException {
+	public void clearNewsAlertSubscription() throws Exception {
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		
 		if(isElementVisible(SubscribeNewsAlertBox)) {
@@ -48,7 +48,7 @@ public class Homepage extends WebUIHelpers {
 		
 	}
 
-	public void goToWeatherPage() throws InterruptedException {
+	public void goToWeatherPage() throws Exception {
 		try {
 			clickElement(SubMenu);
 			clickElement(weatherPage);

@@ -61,6 +61,7 @@ public class Weatherpage extends WebUIHelpers {
 	private WebElement UI_TempInF;
 	
 	String cityName;
+	public static String  Condition, Humidity,TempInDegrees,TempInF;
 	
 	public String getTempFahrenheit() {
 		return tempFahrenheit;
@@ -93,9 +94,9 @@ public class Weatherpage extends WebUIHelpers {
 
 	}
 
-	public void SearchAndSelectCity(String cityName) {
+	public void SearchAndSelectCity(String cityName) throws Exception {
 		setCityName(cityName);
-		SearchBox.sendKeys(cityName);
+		SearchBox.sendKeys(getCityName());
 		clickElementJS(searchedCity);
 		 setCityName(searchedCity.getAttribute("id"));
 
@@ -111,19 +112,21 @@ public class Weatherpage extends WebUIHelpers {
 
 	public void verfiyCityDisplayed() {
 		System.out.println(getCityName());
-		Assert.assertEquals(getCityName(), cityDisplayed.getAttribute("title"));
+		Assert.assertEquals(getCityName(), cityDisplayed.getAttribute("title"),"Same city not present");
 		
 	}
 
 	public void getTemprature() {
 		setTempCelcius(CeliusTemp.getText());
+		System.out.println(CeliusTemp.getText());
 		setTempFahrenheit(FahrenheitTemp.getText());
+		System.out.println(FahrenheitTemp.getText());
 		
 		
 	}
 
-	public void selectCityOnMap() {
-		clickElement(cityDisplayed);
+	public void selectCityOnMap() throws Exception {
+		clickElementJS(cityDisplayed);
 		
 	}
 
@@ -133,9 +136,10 @@ public class Weatherpage extends WebUIHelpers {
 				
 		
 	}
-
+	
+	
 	public void getWeatherDetails() {
-		String  Condition, Humidity,TempInDegrees,TempInF;
+		
 		
 		Condition=UI_Condition.getText().split(":")[1];
 		Humidity=UI_Humidity.getText().split(":")[1].replace("%", "");
@@ -152,6 +156,12 @@ public class Weatherpage extends WebUIHelpers {
 		System.out.println("Condition is: "+weatherFromUi.getCondition());
 		System.out.println("Humidity is: "+weatherFromUi.getHumidity());
 		System.out.println("Temp is: "+weatherFromUi.getTempInDegrees());
+	}
+
+	public void verfiryWeatherDisplayedOnUI() {
+		Assert.assertEquals(TempInDegrees, getTempCelcius(), "C Temp different ");
+		Assert.assertEquals(TempInF, getTempFahrenheit(), "F Temp different ");
+		
 	}
 
 	
