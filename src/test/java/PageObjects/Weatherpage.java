@@ -35,15 +35,18 @@ public class Weatherpage extends WebUIHelpers {
 	@FindBy(how=How.CSS,using = ".outerContainer")
 	private WebElement cityDisplayed;
 	
+	@FindBy(how=How.CSS,using=".temperatureContainer")
+	WebElement CityPresent;
+	
 	@FindBy(how=How.XPATH,using = "//*[@class='temperatureContainer']/*[@class='tempRedText']")
 	private WebElement CeliusTemp;
 	
 	@FindBy(how=How.XPATH,using = "//*[@class='temperatureContainer']/*[@class='tempWhiteText']")
 	private WebElement FahrenheitTemp;
 
-	private String tempCelcius;
+	private int tempCelcius;
 	
-	private String tempFahrenheit;
+	private int tempFahrenheit;
 	
 	@FindBy(how = How.CSS,using = ".leaflet-popup")
 	private WebElement WeatherPopup;
@@ -60,22 +63,40 @@ public class Weatherpage extends WebUIHelpers {
 	@FindBy(how=How.XPATH,using = "//div[@class='leaflet-popup-content']/div/*/*[contains(text(),'Temp in Fahrenheit')]")
 	private WebElement UI_TempInF;
 	
-	String cityName;
-	public static String  Condition, Humidity,TempInDegrees,TempInF;
+	public String cityName;
 	
-	public String getTempFahrenheit() {
+	public String  Condition, Humidity;
+	public int TempInDegrees,TempInF;
+	
+	public int getTempInDegrees() {
+		return TempInDegrees;
+	}
+
+	public void setTempInDegrees(int tempInDegrees) {
+		TempInDegrees = tempInDegrees;
+	}
+
+	public int getTempInF() {
+		return TempInF;
+	}
+
+	public void setTempInF(int tempInF) {
+		TempInF = tempInF;
+	}
+
+	public int getTempFahrenheit() {
 		return tempFahrenheit;
 	}
 
-	public void setTempFahrenheit(String tempFahrenheit) {
+	public void setTempFahrenheit(int tempFahrenheit) {
 		this.tempFahrenheit = tempFahrenheit;
 	}
 
-	public String getTempCelcius() {
+	public int getTempCelcius() {
 		return tempCelcius;
 	}
 
-	public void setTempCelcius(String tempCelcius) {
+	public void setTempCelcius(int tempCelcius) {
 		this.tempCelcius = tempCelcius;
 	}
 
@@ -111,22 +132,22 @@ public class Weatherpage extends WebUIHelpers {
 	}
 
 	public void verfiyCityDisplayed() {
-		System.out.println(getCityName());
-		Assert.assertEquals(getCityName(), cityDisplayed.getAttribute("title"),"Same city not present");
+				Assert.assertEquals(getCityName(), cityDisplayed.getAttribute("title"),"Same city not present");
 		
 	}
 
 	public void getTemprature() {
-		setTempCelcius(CeliusTemp.getText());
-		System.out.println(CeliusTemp.getText());
-		setTempFahrenheit(FahrenheitTemp.getText());
-		System.out.println(FahrenheitTemp.getText());
+		
+		setTempCelcius(Integer.valueOf((CeliusTemp.getText().substring(0, 2))));
+		
+		setTempFahrenheit(Integer.valueOf((FahrenheitTemp.getText().substring(0, 2))));
+		
 		
 		
 	}
 
 	public void selectCityOnMap() throws Exception {
-		clickElementJS(cityDisplayed);
+		clickElementJS(CityPresent);
 		
 	}
 
@@ -141,17 +162,20 @@ public class Weatherpage extends WebUIHelpers {
 	public void getWeatherDetails() {
 		
 		
-		Condition=UI_Condition.getText().split(":")[1];
+		Condition=UI_Condition.getText().replaceAll("Condition : ", "");
 		Humidity=UI_Humidity.getText().split(":")[1].replace("%", "");
-		TempInDegrees=UI_TempInDegrees.getText().split(":")[1];
-		TempInF=UI_TempInF.getText().split(":")[1];
+		setTempInDegrees(Integer.valueOf(UI_TempInDegrees.getText().split(":")[1].replace(" ", "")));
+		setTempInF(Integer.valueOf(UI_TempInF.getText().split(":")[1].replace(" ", "")));
 		
-		Boolean CelciusToFarenheit=CompareTemp(TempInDegrees,TempInF);
+		Boolean CelciusToFarenheit=CompareTemp(getTempInDegrees(),getTempInF());
+		
 		if(CelciusToFarenheit)
 			System.out.println("temp in celecius and Farenheit are same");
 		else
 			System.out.println("temp is not the same");
-		Weather weatherFromUi=new Weather(Condition,Humidity,TempInDegrees);
+		
+		
+		Weather weatherFromUi=new Weather(Condition,Humidity,getTempInDegrees());
 		
 		System.out.println("Condition is: "+weatherFromUi.getCondition());
 		System.out.println("Humidity is: "+weatherFromUi.getHumidity());
@@ -159,8 +183,8 @@ public class Weatherpage extends WebUIHelpers {
 	}
 
 	public void verfiryWeatherDisplayedOnUI() {
-		Assert.assertEquals(TempInDegrees, getTempCelcius(), "C Temp different ");
-		Assert.assertEquals(TempInF, getTempFahrenheit(), "F Temp different ");
+		Assert.assertEquals(getTempInDegrees(), getTempCelcius(), "C Temp different ");
+		Assert.assertEquals(getTempInF(), getTempFahrenheit(), "F Temp different ");
 		
 	}
 

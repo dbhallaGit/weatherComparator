@@ -52,8 +52,10 @@ public class WebUIHelpers {
 
 	}
 	
-	public Boolean CompareTemp(String tempInDegrees, String tempInF) {
-		if(Integer.valueOf(tempInF)==(Integer.valueOf(tempInDegrees)*1.8)+32)
+	public Boolean CompareTemp(int tempInDegrees, int tempInF) {	
+		System.out.println("Temp in degree: " + tempInDegrees+ " into F: "+((tempInDegrees*1.8)+32) );
+		System.out.println("temp in F: "+ tempInF);
+		if((float)tempInF==Math.round((float)((tempInDegrees*1.8)+32))) 			
 				return true;
 		else 
 			return false;

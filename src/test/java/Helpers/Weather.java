@@ -2,11 +2,15 @@ package Helpers;
 
 public class Weather {
 
-	public Weather(String condition, String humidity, String tempInDegrees) {
+	public Weather(String condition, String humidity, int tempInDegrees2) {
+		this.Condition=condition;
+		this.Humidity=humidity;
+		this.TempInDegrees=tempInDegrees2;
 		
 	}
 	
-	String CityName, Condition, Humidity,TempInDegrees;
+	String CityName, Condition, Humidity;
+	int TempInDegrees;
 
 	
 
@@ -26,11 +30,11 @@ public class Weather {
 		Humidity = humidity;
 	}
 
-	public String getTempInDegrees() {
+	public int getTempInDegrees() {
 		return TempInDegrees;
 	}
 
-	public void setTempInDegrees(String tempInDegrees) {
+	public void setTempInDegrees(int tempInDegrees) {
 		TempInDegrees = tempInDegrees;
 	}
 

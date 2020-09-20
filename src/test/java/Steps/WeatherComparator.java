@@ -34,9 +34,9 @@ public class WeatherComparator {
 	}
 
 	@Then("use pin location to select a city {string}")
-	public void use_pin_location_to_select_a_city(String cityName) throws Exception {
+	public void use_pin_location_to_select_a_city(String string) throws Exception {
 		weatherpage.clearDefaultCheckedCities();
-		weatherpage.SearchAndSelectCity(cityName);
+		weatherpage.SearchAndSelectCity(string);
 		
 
 	}
@@ -50,6 +50,8 @@ public class WeatherComparator {
 
 	@Then("verify weather details reveals on selecting the city")
 	public void verify_weather_details_reveals_on_selecting_the_city() throws Exception {
+		weatherpage.verfiyCityDisplayed();
+		weatherpage.getTemprature();
 		weatherpage.selectCityOnMap();
 		weatherpage.verfiyWeatherDetailsRevealed();
 		weatherpage.getWeatherDetails();		
