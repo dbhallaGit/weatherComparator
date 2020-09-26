@@ -30,6 +30,7 @@ public class Setup {
 		loadproperties();
 		setUpDriver();
 		String platform=prop.getProperty("WebApplication");
+		//setUpRestClient();
 		
 		if(platform.equalsIgnoreCase("NDTV"))
 		launchWebApplication(prop.getProperty("NDTV_Url"));
@@ -39,7 +40,9 @@ public class Setup {
 		
 	}
 	
-	//@After
+	
+
+	@After
 	public void quit() {
 		WebUIHelpers.driver.quit();
 	}

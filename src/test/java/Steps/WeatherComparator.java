@@ -1,7 +1,10 @@
 package Steps;
 
+import Helpers.APIHelper;
+import Helpers.Weather;
 import PageObjects.Homepage;
 import PageObjects.Weatherpage;
+import PageObjects.weatherAPI;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 
@@ -9,6 +12,8 @@ public class WeatherComparator {
 
 	Homepage homepage = new Homepage();
 	Weatherpage weatherpage = new Weatherpage();
+	Weather weatherFromUi,weatherFromAPI;
+	
 
 	public WeatherComparator() {
 
@@ -36,7 +41,8 @@ public class WeatherComparator {
 	@Then("use pin location to select a city {string}")
 	public void use_pin_location_to_select_a_city(String string) throws Exception {
 		weatherpage.clearDefaultCheckedCities();
-		weatherpage.SearchAndSelectCity(string);
+		weatherpage.setCityName(string);
+		weatherpage.SearchAndSelectCity(weatherpage.getCityName());
 		
 
 	}
@@ -54,7 +60,7 @@ public class WeatherComparator {
 		weatherpage.getTemprature();
 		weatherpage.selectCityOnMap();
 		weatherpage.verfiyWeatherDetailsRevealed();
-		weatherpage.getWeatherDetails();		
+		weatherFromUi=weatherpage.getWeatherDetails();		
 		weatherpage.verfiryWeatherDisplayedOnUI();
 		
 
@@ -62,6 +68,8 @@ public class WeatherComparator {
 
 	@Then("compare the Weather information from website and API response is similar as per given variance")
 	public void compare_the_weather_information_from_website_and_api_response_is_similar_as_per_given_variance() {
+		
+		weatherFromAPI=weatherAPI.getWeatherFromAPI(weatherpage.getCityName());
 		
 
 	}

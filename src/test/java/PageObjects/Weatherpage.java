@@ -68,6 +68,10 @@ public class Weatherpage extends WebUIHelpers {
 	public String  Condition, Humidity;
 	public int TempInDegrees,TempInF;
 	
+	Weather weatherFromUi;
+	
+	
+	
 	public int getTempInDegrees() {
 		return TempInDegrees;
 	}
@@ -116,7 +120,7 @@ public class Weatherpage extends WebUIHelpers {
 	}
 
 	public void SearchAndSelectCity(String cityName) throws Exception {
-		setCityName(cityName);
+		
 		SearchBox.sendKeys(getCityName());
 		clickElementJS(searchedCity);
 		 setCityName(searchedCity.getAttribute("id"));
@@ -159,7 +163,7 @@ public class Weatherpage extends WebUIHelpers {
 	}
 	
 	
-	public void getWeatherDetails() {
+	public Weather getWeatherDetails() {
 		
 		
 		Condition=UI_Condition.getText().replaceAll("Condition : ", "");
@@ -175,11 +179,13 @@ public class Weatherpage extends WebUIHelpers {
 			System.out.println("temp is not the same");
 		
 		
-		Weather weatherFromUi=new Weather(Condition,Humidity,getTempInDegrees());
+		weatherFromUi=new Weather(Condition,Humidity,getTempInDegrees());
 		
 		System.out.println("Condition is: "+weatherFromUi.getCondition());
 		System.out.println("Humidity is: "+weatherFromUi.getHumidity());
 		System.out.println("Temp is: "+weatherFromUi.getTempInDegrees());
+		
+		return weatherFromUi;
 	}
 
 	public void verfiryWeatherDisplayedOnUI() {

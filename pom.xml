@@ -66,7 +66,25 @@
 		</dependency>
 
 
+		<!-- API Dependencies -->
 
+
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+		<!-- It includes JSONpath and XML Path -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>4.3.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- To validate json schema -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<version>4.3.1</version>
+			<scope>test</scope>
+		</dependency>
 
 
 
